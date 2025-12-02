@@ -1,0 +1,169 @@
+:root {
+    --atlas-primary: #0f172a;      /* texte principal (bleu foncé) */
+    --atlas-accent: #0ea5e9;       /* bleu clair (boutons, liens) */
+    --atlas-accent-soft: rgba(14, 165, 233, 0.12);
+    --atlas-text: #111827;
+    --atlas-muted: #6b7280;
+    --atlas-bg: #f3f4f6;           /* fond global clair */
+    --atlas-card: #ffffff;         /* cartes blanches */
+}
+
+/* Fond de page clair */
+body.bg-atlas {
+    background-color: var(--atlas-bg);
+    color: var(--atlas-text);
+    min-height: 100vh;
+}
+
+/* Navbar blanche */
+.atlas-navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.atlas-navbar .navbar-brand span {
+    color: var(--atlas-primary);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.atlas-navbar .nav-link {
+    color: var(--atlas-muted);
+}
+
+.atlas-navbar .nav-link.active,
+.atlas-navbar .nav-link:hover {
+    color: var(--atlas-primary);
+}
+
+/* Logo – glow khfif */
+.navbar-brand-logo {
+    background-color: #ffffff;
+    border-radius: 999px;
+    padding: 4px;
+    box-shadow: 0 0 12px rgba(14, 165, 233, 0.6);
+}
+
+/* Cartes */
+.atlas-card {
+    background-color: var(--atlas-card);
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.atlas-card-header {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Badges */
+.badge-atlas {
+    background-color: var(--atlas-accent-soft);
+    color: var(--atlas-accent);
+    font-weight: 500;
+}
+
+/* Bouton principal */
+.btn-atlas-primary {
+    background: linear-gradient(90deg, #0ea5e9, #22c55e);
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.btn-atlas-primary:hover {
+    filter: brightness(1.05);
+}
+
+/* Tableaux */
+.table-atlas {
+    color: var(--atlas-text);
+    border-color: #e5e7eb;
+}
+
+.table-atlas thead {
+    background-color: #e5e7eb;
+}
+
+.table-atlas tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* Pages login/register */
+.auth-wrapper {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Footer */
+.atlas-footer {
+    color: var(--atlas-muted);
+    border-top: 1px solid #e5e7eb;
+    background-color: #ffffff;
+}
+
+/* Top movers style (Marché) */
+.top-movers-card {
+    background: #0b1120;           /* dark navy */
+    color: #e5e7eb;
+}
+
+.top-movers-card .fw-semibold {
+    color: #f9fafb;
+}
+
+.top-movers-list {
+    margin-top: 0.5rem;
+}
+
+.top-mover-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.45rem 0.6rem;
+    border-radius: 0.5rem;
+    margin-bottom: 0.35rem;
+    background: rgba(15, 23, 42, 0.85);
+}
+
+.top-mover-row:hover {
+    background: rgba(30, 64, 175, 0.9);
+}
+
+.top-mover-symbol {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #bfdbfe;
+}
+
+.top-mover-name {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    max-width: 140px;
+}
+
+.top-mover-price {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.top-mover-currency {
+    font-size: 0.7rem;
+    color: #9ca3af;
+}
+
+.top-mover-change {
+    font-size: 0.75rem;
+    margin-top: 0.1rem;
+}
+
+.top-mover-change.positive {
+    color: #22c55e;     /* green */
+}
+
+.top-mover-change.negative {
+    color: #f97373;     /* ila bghina red chi nhar */
+}

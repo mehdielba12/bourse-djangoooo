@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Marché des actions{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+
+    <h1 class="h3 fw-bold mb-4">Marché des actions</h1>
+
+    <div class="row">
+        <!-- ================= COLONNE GAUCHE : LISTE DES ACTIONS ================= -->
+        <div class="col-lg-9 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="card-title mb-0">
+                            Catalogue des actions disponibles
+                        </h5>
+
+                        <!-- badge auto-update (juste décoratif) -->
+                        <span class="badge bg-success-subtle text-success border border-success fw-semibold">
+                            Prix mis à jour automatiquement
+                        </span>
+                    </div>
+
+                    <!-- Ligne "dernière mise à jour" -->
+                    {% if last_price_update %}
+                        <div class="small text-muted mb-3">
+                            Dernière mise à jour : 
+                            <span class="fw-semibold">
+                                {{ last_price_update|date:"d/m/Y H:i" }}
+                            </span>
+                            {% if just_updated %}
+                                <span class="badge bg-success ms-2">Actualisé</span>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Filtres / recherche -->
+                    <form method="get" class="row g-2 mb-3 align-items-end">
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted mb-1">
+                                Rechercher (symbole ou nom)
+                            </label>
+                            <input type="text"
+                                   name="q"
+                                   class="form-control"
+                                   placeholder="AAPL, Tesla..."
+                                   value="{{ q }}">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted mb-1">
+                                Devise
+                            </label>
+                            <select name="currency" class="form-select">
+                                <option value="">Toutes devises</option>
+                                {% for cur in currencies %}
+                                    <option value="{{ cur }}"
+                                        {% if cur == currency %}selected{% endif %}>
+                                        {{ cur }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="col-md-3 d-flex gap-2">
+                            <button type="submit" class="btn btn-primary flex-fill">
+                                Filtrer
+                            </button>
+                            <a href="{% url 'stock_list' %}" class="btn btn-outline-secondary flex-fill">
+                                Réinitialiser
+                            </a>
+                        </div>
+                    </form>
+
+                    <!-- Tableau des actions -->
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Symbole</th>
+                                    <th>Nom</th>
+                                    <th class="text-center">Devise</th>
+                                    <th class="text-end">Dernier prix connu</th>
+                                    <th class="text-end"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if stocks %}
+                                    {% for s in stocks %}
+                                        <tr>
+                                            <td class="fw-semibold">{{ s.symbol }}</td>
+                                            <td>{{ s.name }}</td>
+                                            <td class="text-center">{{ s.currency }}</td>
+                                            <td class="text-end">
+                                                {% if s.last_price %}
+                                                    {{ s.last_price }}
+                                                {% else %}
+                                                    <span class="text-muted small">—</span>
+                                                {% endif %}
+                                            </td>
+                                           <td class="text-end">
+    <a href="{% url 'dashboard' %}?symbol={{ stock.symbol }}"
+       class="btn btn-sm btn-success">
+        Trader
+    </a>
+</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">
+                                            Aucune action trouvée pour ces critères.
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= COLONNE DROITE : TOP ACTIONS ================= -->
+        <div class="col-lg-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="card-title mb-0">Top actions</h6>
+                        <span class="badge bg-secondary">Démo</span>
+                    </div>
+                    <p class="text-muted small mb-3">
+                        Classement basé sur le dernier prix connu.
+                    </p>
+
+                    {% if top_stocks %}
+                        <ul class="list-group list-group-flush">
+                            {% for s in top_stocks %}
+                                <li class="list-group-item px-0 d-flex justify-content-between align-items-baseline">
+                                    <div>
+                                        <div class="fw-semibold">{{ s.symbol }}</div>
+                                        <div class="text-muted small">{{ s.name }}</div>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="fw-semibold">{{ s.last_price }}</div>
+                                        <div class="text-muted small">+0.00 (0.00%)</div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-muted small">
+                            Les prix ne sont pas encore disponibles. Lancez d'abord la mise à jour.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
